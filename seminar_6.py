@@ -130,3 +130,35 @@
 
 # for perm in p_list:
 #     print(list(perm))
+
+
+import itertools
+import csv
+
+
+words = [("t", "g", "u"), "n", "b", ("r", "f", 
+         "a"), ("w", "o", "y"), "s", "z", ("c",
+         "k"), "l", "i", ("q", "h"), "m"]
+
+combinations = []
+variable_words = [word for word in words if isinstance(word, tuple)]
+
+for combination in itertools.product(*variable_words):
+    new_combination = []
+    variable_index = 0
+    for word in words:
+        if isinstance(word, tuple):
+            new_combination.append(combination[variable_index])
+            variable_index += 1
+        else:
+            new_combination.append(word)
+    combinations.append(tuple(new_combination))
+
+for combination in combinations:
+    output_combination = list(combination)
+    print(tuple(output_combination))
+
+    with open('combinations.csv', 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+   
+        writer.writerows(combinations)
